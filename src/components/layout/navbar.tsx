@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Container } from "./container";
 import { dashboardPath, issuesPath } from "@/paths";
 import { LucideBug } from "lucide-react";
+import ActiveLink from "@/components/active-link";
 
 const navLinks = [
   { name: "Dashboard", href: dashboardPath() },
@@ -27,11 +28,8 @@ function Menu() {
   return (
     <ul className="flex gap-layout text-muted-foreground">
       {navLinks.map((link) => (
-        <li
-          className="hover:text-foreground transition-colors duration-300"
-          key={link.name}
-        >
-          <Link href={link.href}>{link.name}</Link>
+        <li key={link.name}>
+          <ActiveLink href={link.href}>{link.name}</ActiveLink>
         </li>
       ))}
     </ul>
