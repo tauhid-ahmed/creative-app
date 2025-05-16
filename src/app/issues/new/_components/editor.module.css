@@ -1,0 +1,131 @@
+.wrapper {
+  border-radius: 0.75rem;
+  border: 1px solid #d1d5db;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 4px rgb(0 0 0 / 0.1), 0 2px 4px -4px rgb(0 0 0 / 0.1);
+}
+
+.dark .wrapper {
+  border: 1px solid #27272a;
+}
+
+/* Root EasyMDE container */
+:global(.EasyMDEContainer) {
+  border: none;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+}
+
+/* Editor background */
+:global(.CodeMirror) {
+  background-color: #f8fafc;
+  color: #0f172a;
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border: none !important;
+}
+
+/* Dark mode editor - using stone */
+:global(.dark .CodeMirror) {
+  background-color: #1c1917; /* Dark: stone-900 */
+  color: #f5f5f4; /* stone-100 */
+}
+
+/* Selection styling */
+:global(.CodeMirror-selected),
+:global(.CodeMirror ::selection) {
+  background-color: #e7e5e4 !important; /* Light: stone-200 */
+}
+
+:global(.dark .CodeMirror-selected),
+:global(.dark .CodeMirror ::selection) {
+  background-color: #57534e !important; /* Dark: stone-600 */
+}
+
+/* Toolbar base */
+:global(.editor-toolbar) {
+  background-color: #f1f5f9; /* Light: slate-100 */
+  color: #0f172a;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Dark mode toolbar using stone */
+:global(.dark .editor-toolbar) {
+  background-color: #292524; /* stone-800 */
+  color: #e7e5e4; /* stone-200 */
+  border: 1px solid #232220; /* stone-700 */
+}
+
+/* Buttons */
+:global(.editor-toolbar button) {
+  background: transparent;
+  color: inherit;
+  border: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-radius: 0.375rem;
+}
+
+/* Hover/focus */
+:global(.editor-toolbar button:hover),
+:global(.editor-toolbar button:focus) {
+  background-color: #e2e8f0; /* Light: gray-200 */
+  color: #0f172a;
+}
+
+:global(.dark .editor-toolbar button:hover),
+:global(.dark .editor-toolbar button:focus) {
+  background-color: #44403c; /* stone-700 */
+  color: #f5f5f4; /* stone-100 */
+}
+
+/* Active buttons */
+:global(.editor-toolbar button.active) {
+  background-color: #e2e8f0; /* Light: gray-200 */
+}
+
+:global(.dark .editor-toolbar button.active) {
+  background-color: #57534e; /* stone-600 */
+}
+
+/* Remove status bar (comments, word count) */
+:global(.editor-statusbar) {
+  display: none;
+}
+
+/* Light Mode Preview */
+:global(.editor-preview),
+:global(.editor-preview-active),
+:global(.editor-preview-side) {
+  background-color: #f8fafc; /* light: gray-50 */
+  color: #0f172a; /* slate-900 */
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Dark Mode Preview (stone) */
+:global(.dark .editor-preview),
+:global(.dark .editor-preview-active),
+:global(.dark .editor-preview-side) {
+  background-color: #1c1917; /* stone-900 */
+  color: #f5f5f4; /* stone-100 */
+}
+
+/* Optional: override links, headings, etc. */
+:global(.dark .editor-preview a),
+:global(.dark .editor-preview-active a),
+:global(.dark .editor-preview-side a) {
+  color: #a8a29e; /* stone-400 */
+  text-decoration: underline;
+}
+
+:global(.dark .editor-preview h1),
+:global(.dark .editor-preview h2),
+:global(.dark .editor-preview h3),
+:global(.dark .editor-preview h4),
+:global(.dark .editor-preview h5),
+:global(.dark .editor-preview h6) {
+  color: #e7e5e4; /* stone-200 */
+}
