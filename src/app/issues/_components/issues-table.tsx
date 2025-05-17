@@ -63,8 +63,14 @@ export function IssuesTable({ issues, sort = "" }: Props) {
         </TableHeader>
         <TableBody>
           {sortedIssues.map((issue) => (
-            <TableRow key={issue.id}>
-              <TableCell className="font-medium px-5">{issue.title}</TableCell>
+            <TableRow key={issue.id} className="relative">
+              <TableCell className="font-medium px-5">
+                {issue.title}{" "}
+                <Link
+                  className="absolute inset-0"
+                  href={`/issues/${issue.id}`}
+                />
+              </TableCell>
               <TableCell className="px-5 hidden md:table-cell">
                 <Badge variant="outline">Feature</Badge>
               </TableCell>
