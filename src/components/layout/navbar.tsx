@@ -3,6 +3,7 @@ import { Container } from "./container";
 import { dashboardPath, issuesPath } from "@/paths";
 import { LucideBug } from "lucide-react";
 import ActiveLink from "@/components/active-link";
+import { ThemeToggle } from "../theme-toggle";
 
 const navLinks = [
   { name: "Dashboard", href: dashboardPath() },
@@ -13,11 +14,14 @@ export default function Navbar() {
   return (
     <header className="py-4 border-b">
       <Container>
-        <nav className="flex gap-layout justify-between items-center">
+        <nav className="flex gap-layout items-center">
           <Link href="/">
             <LucideBug className="size-6 md:size-8" />
           </Link>
-          <Menu />
+          <div className="ml-auto flex gap-layout items-center">
+            <Menu />
+            <ThemeToggle />
+          </div>
         </nav>
       </Container>
     </header>

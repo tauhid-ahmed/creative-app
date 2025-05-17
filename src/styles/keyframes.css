@@ -1,0 +1,12 @@
+@themes {
+  --animate-opacity-in: opacity-in 300ms ease-in 1 forwards;
+
+  @keyframes opacity-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
