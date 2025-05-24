@@ -12,10 +12,20 @@ import { Container } from "@/components/layout/container";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { type FormData } from "@/validationSchema";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ISSUE_FEATURES, ISSUE_STATUSES } from "@/constants";
 
-type FormData = {
-  title: string;
-  description: string;
+const IssuesStatus = {
+  OPEN: "Open",
+  CLOSED: "Closed",
+  IN_PROGRESS: "In Progress",
 };
 
 const autofocusNoSpellcheckerOptions = {
@@ -29,6 +39,7 @@ export const Editor = () => {
     defaultValues: {
       title: "",
       description: "",
+      status: "OPEN",
     },
   });
 
@@ -69,7 +80,7 @@ export const Editor = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="wrapper space-y-4"
       >
-        <Label>
+        <Label className="flex-">
           <Controller
             name="title"
             control={form.control}
@@ -79,10 +90,9 @@ export const Editor = () => {
           />
         </Label>
         {form.formState.errors.title?.message && (
-          <p className="text-destructive text-sm">
-            {form.formState.errors.title?.message}
-          </p>
+          <ErrorMessage message={form.formState.errors.title.message} />
         )}
+
         <Controller
           name="description"
           control={form.control}
@@ -95,12 +105,66 @@ export const Editor = () => {
           )}
         />
         {form.formState.errors.description?.message && (
-          <p className="text-destructive text-sm">
-            {form.formState.errors.description?.message}
-          </p>
+          <ErrorMessage message={form.formState.errors.description.message} />
         )}
-        <Button size="lg">Add new issue</Button>
+        <div className="flex gap-layout">
+          <IssueFeature name="Feature" control={form.control} />
+          <IssueStatus name="Status" control={form.control} />
+          <Button className="ml-auto" size="lg">
+            Add new issue
+          </Button>
+        </div>
       </form>
     </Container>
   );
 };
+
+function ErrorMessage({ message }: { message: string }) {
+  return <p className="text-destructive text-sm">{message}</p>;
+}
+
+function IssueStatus({ name, control }: { name: string; control: any }) {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <SelectTrigger className="h-12!">
+            <SelectValue placeholder="Status" />
+          </SelectTrigger>
+          <SelectContent>
+            {ISSUE_STATUSES.map((status) => (
+              <SelectItem value={status} key={status}>
+                {IssuesStatus[status]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+    />
+  );
+}
+
+function IssueFeature({ name, control }: { name: string; control: any }) {
+  return (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <SelectTrigger className="h-12!">
+            <SelectValue placeholder="Feature" />
+          </SelectTrigger>
+          <SelectContent>
+            {ISSUE_FEATURES.map((feature) => (
+              <SelectItem key={feature} value={feature}>
+                {feature}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+    />
+  );
+}
