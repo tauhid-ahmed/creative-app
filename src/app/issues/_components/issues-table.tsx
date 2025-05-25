@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { LucideChevronDown } from "lucide-react";
-import { cn } from "@/lib/utils";
+c;
 import {
   Table,
   TableBody,
@@ -12,15 +11,17 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { type Issue } from "@/db/schemas";
+import { SortableColumn } from "./sortable-column";
 
 const DESC = "desc";
 
 type Props = {
   issues: Issue[];
   sort: string;
+  searchParams: URLSearchParams;
 } & React.PropsWithChildren;
 
-export function IssuesTable({ issues, sort = "" }: Props) {
+export function IssuesTable({ issues, sort = "", searchParams }: Props) {
   const [currentSortName, direction] = sort.split(":");
 
   const sortedIssues = [...issues].sort((a, b) => {
@@ -40,7 +41,11 @@ export function IssuesTable({ issues, sort = "" }: Props) {
             {["title", "type", "status", "description", "created_at"].map(
               (key) => (
                 <TableHead key={key}>
-                  <SortableColumn sortKey={key} currentSort={sort}>
+                  <SortableColumn
+                    sortKey={key}
+                    currentSort={sort}
+                    searchParams={searchParams}
+                  >
                     {getColumnLabel(key)}
                   </SortableColumn>
                 </TableHead>
@@ -78,50 +83,50 @@ export function IssuesTable({ issues, sort = "" }: Props) {
   );
 }
 
-type SortableColumnProps = {
-  sortKey: string;
-  currentSort: string;
-} & React.PropsWithChildren;
+// type SortableColumnProps = {
+//   sortKey: string;
+//   currentSort: string;
+// } & React.PropsWithChildren;
 
-function SortableColumn({
-  children,
-  sortKey,
-  currentSort,
-}: SortableColumnProps) {
-  const [activeKey, direction] = currentSort.split(":");
-  const isActive = activeKey === sortKey;
+// function SortableColumn({
+//   children,
+//   sortKey,
+//   currentSort,
+// }: SortableColumnProps) {
+//   const [activeKey, direction] = currentSort.split(":");
+//   const isActive = activeKey === sortKey;
 
-  const nextSort = !isActive
-    ? sortKey
-    : direction !== DESC
-    ? `${sortKey}:${DESC}`
-    : "";
+//   const nextSort = !isActive
+//     ? sortKey
+//     : direction !== DESC
+//     ? `${sortKey}:${DESC}`
+//     : "";
 
-  return (
-    <Link
-      href={nextSort ? `?sort=${nextSort}` : "?"}
-      className="relative group px-3"
-    >
-      {children}
-      <span
-        className={cn(
-          "absolute -right-4 top-1/2 -translate-y-1/2 rounded",
-          isActive && "bg-primary/20"
-        )}
-      >
-        <LucideChevronDown
-          className={cn(
-            "size-4 text-primary opacity-0 group-hover:opacity-100 transition-[opacity_transform] duration-300",
-            {
-              "opacity-100": isActive,
-              "rotate-180": isActive && direction === DESC,
-            }
-          )}
-        />
-      </span>
-    </Link>
-  );
-}
+//   return (
+//     <Link
+//       href={nextSort ? `?sort=${nextSort}` : "?"}
+//       className="relative group px-3"
+//     >
+//       {children}
+//       <span
+//         className={cn(
+//           "absolute -right-4 top-1/2 -translate-y-1/2 rounded",
+//           isActive && "bg-primary/20"
+//         )}
+//       >
+//         <LucideChevronDown
+//           className={cn(
+//             "size-4 text-primary opacity-0 group-hover:opacity-100 transition-[opacity_transform] duration-300",
+//             {
+//               "opacity-100": isActive,
+//               "rotate-180": isActive && direction === DESC,
+//             }
+//           )}
+//         />
+//       </span>
+//     </Link>
+//   );
+// }
 
 function getColumnLabel(key: string): string {
   switch (key) {
