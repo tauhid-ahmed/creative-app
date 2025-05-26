@@ -1,24 +1,29 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-type Props = {
-  searchParams: URLSearchParams;
-} & React.PropsWithChildren;
-
-export function Search({ searchParams }: Props) {
-  const params = new URLSearchParams(searchParams);
+export function Search() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   return (
     <div>
       <Input
         onChange={(e) => {
-          params.set("search", e.currentTarget.value);
+          const params = new URLSearchParams(searchParams.toString());
+          const value = e.currentTarget.value;
+
+          if (value) {
+            params.set("search", value);
+          } else {
+            params.delete("search");
+          }
+
           router.push(`?${params.toString()}`);
         }}
         placeholder="Search"
+        defaultValue={searchParams.get("search") || ""}
       />
     </div>
   );
