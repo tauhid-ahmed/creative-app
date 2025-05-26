@@ -11,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { type Issue } from "@/db/schemas";
 import { SortableColumn } from "./sortable-column";
+import { Search } from "./search";
 
 const DESC = "desc";
 
@@ -34,6 +35,7 @@ export function IssuesTable({ issues, sort = "", searchParams }: Props) {
 
   return (
     <div className="border rounded overflow-hidden">
+      <Search searchParams={searchParams} />
       <Table>
         <TableHeader className="bg-accent/60">
           <TableRow>

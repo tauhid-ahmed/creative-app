@@ -7,14 +7,14 @@ import { count } from "drizzle-orm";
 import { Pagination } from "./_components/pagination";
 
 type Props = {
-  searchParams: Promise<{ sort: string; page: string }>;
+  searchParams: Promise<{ sort: string; page: string; search: string }>;
 };
 
 const ITEMS_PER_PAGE = 1;
 
 export default async function IssuesPage({ searchParams }: Props) {
   // await new Promise((resolve) => setTimeout(resolve, 500000));
-  const { sort, page } = await searchParams;
+  const { sort, page, search } = await searchParams;
   const [{ count: totalLength }] = await db
     .select({ count: count() })
     .from(issuesTable);
@@ -23,6 +23,7 @@ export default async function IssuesPage({ searchParams }: Props) {
   const urlSearchParams = new URLSearchParams();
   if (page) urlSearchParams.set("page", page);
   if (sort) urlSearchParams.set("sort", sort);
+  if (search) urlSearchParams.set("search", search);
 
   return (
     <Container>

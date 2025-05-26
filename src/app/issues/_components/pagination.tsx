@@ -34,7 +34,7 @@ export function Pagination({
 
     const targetPage =
       direction === PREV
-        ? currentPage - 1
+        ? Math.max(1, currentPage - 1)
         : Math.min(currentPage + 1, totalPages);
 
     if (targetPage <= 1) {
