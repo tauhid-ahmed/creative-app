@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "type": "tsc --noEmit",
+    "preinstall": "pnpm add drizzle-orm @neondatabase/serverless dotenv && pnpm add -D drizzle-kit",
     "db:generate": "pnpm exec drizzle-kit generate",
     "db:migrate": "pnpm exec drizzle-kit migrate",
     "db:push": "pnpm exec drizzle-kit push"
