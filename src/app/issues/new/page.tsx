@@ -1,9 +1,9 @@
-import { Editor } from "./_components/editor";
+import { IssueForm } from "../_components/issue-form";
 
 export default function NewIssuePage() {
   return (
     <div>
-      <Editor />
+      <IssueForm />
     </div>
   );
 }

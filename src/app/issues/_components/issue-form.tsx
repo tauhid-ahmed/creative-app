@@ -1,18 +1,10 @@
 "use client";
 
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
-import "easymde/dist/easymde.min.css";
-import styles from "./editor.module.css";
-import { useForm, Controller } from "react-hook-form";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { MdeEditor } from "@/app/issues/_components/mde-editor";
 import { Container } from "@/components/layout/container";
-import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { type FormData } from "@/validationSchema";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -21,6 +13,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ISSUE_FEATURES, ISSUE_STATUSES } from "@/constants";
+import { type IssueData } from "@/validationSchemas";
+import { useRouter } from "next/navigation";
+import { Controller, useForm } from "react-hook-form";
 
 const IssuesStatus = {
   OPEN: "Open",
@@ -28,22 +23,17 @@ const IssuesStatus = {
   IN_PROGRESS: "In Progress",
 };
 
-const autofocusNoSpellcheckerOptions = {
-  autofocus: true,
-  spellChecker: false,
-};
-
-export const Editor = () => {
+export const IssueForm = () => {
   const router = useRouter();
-  const form = useForm<FormData>({
+  const form = useForm<IssueData>({
     defaultValues: {
-      title: "",
+      title: "xs",
       description: "",
       status: "OPEN",
     },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: IssueData) => {
     try {
       const response = await fetch("/api/issues", {
         method: "POST",
@@ -97,11 +87,7 @@ export const Editor = () => {
           name="description"
           control={form.control}
           render={({ field }) => (
-            <SimpleMDE
-              {...field}
-              options={autofocusNoSpellcheckerOptions}
-              className={styles.container}
-            />
+            <MdeEditor className="mde-editor" {...field} />
           )}
         />
         {form.formState.errors.description?.message && (
